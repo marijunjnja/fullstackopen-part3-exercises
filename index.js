@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
 
-const persons = [
+let persons = [
   {
     name: "Arto Hellas",
     number: "040-123456",
@@ -42,6 +42,12 @@ app.get('/info', (req, res) => {
   const date = new Date()
 
   res.send(`<p>Phonebook has info for ${numPersons} people</p> <p>${date}</p>`)
+})
+
+app.delete('/api/persons/:id', (req, res) => {
+  const id = Number(req.params.id)
+  persons = persons.filter(person => person.id !== id)
+  res.status(204).end()
 })
 
 const PORT = 3001
