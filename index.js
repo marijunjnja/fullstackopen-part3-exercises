@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
 app.use(bodyParser.json())
+app.use(morgan('tiny'))
 
 let persons = [
   {
@@ -70,7 +72,7 @@ app.post('/api/persons', (req, res) => {
     })
   }
 
-  if (checkPersons) {
+  if (checkPersons(body.name)) {
     return res.status(400).json({
       error: 'name must be unique'
     })
